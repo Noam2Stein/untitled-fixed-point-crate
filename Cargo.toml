@@ -1,0 +1,11 @@
+[package]
+name = "fxp"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+num-primitive = { version = "0.3.7", optional = true, default-features = false }
+
+[dev-dependencies]
+assert-impl-trait = "1.0.0"
