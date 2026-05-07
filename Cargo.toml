@@ -5,7 +5,12 @@ edition = "2024"
 publish = false
 
 [dependencies]
+fxp-proc-macros = { version = "0.1.0", path = "proc-macros" }
+
 num-primitive = { version = "0.3.7", optional = true, default-features = false }
 
 [dev-dependencies]
 assert-impl-trait = "1.0.0"
+
+[workspace]
+members = [".", "proc-macros"]

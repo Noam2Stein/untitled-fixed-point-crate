@@ -2,14 +2,29 @@
 
 use core::ops::{Add, Neg, Sub};
 
-pub use aliases::*;
-pub use primitive_traits::*;
+pub use crate::{aliases::*, primitive_traits::*};
+
+#[doc(hidden)]
+pub use fxp_proc_macros;
 
 mod aliases;
+mod fx;
 mod primitive_traits;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-pub struct FixedPoint<T, const FRACT_BITS: u32>(pub T);
+pub struct FixedPoint<T, const FRACT_BITS: u32>(T);
+
+impl<T, const FRACT_BITS: u32> FixedPoint<T, FRACT_BITS> {
+    #[inline]
+    pub const fn from_bits(bits: T) -> Self {
+        Self(bits)
+    }
+
+    #[inline]
+    pub fn to_bits(self) -> T {
+        self.0
+    }
+}
 
 impl<T, const FRACT_BITS: u32> FixedPoint<T, FRACT_BITS>
 where

@@ -17,7 +17,16 @@ name = "fxp"
 version = "0.1.0"
 dependencies = [
  "assert-impl-trait",
+ "fxp-proc-macros",
  "num-primitive",
+]
+
+[[package]]
+name = "fxp-proc-macros"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
 ]
 
 [[package]]

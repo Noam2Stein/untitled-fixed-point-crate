@@ -64,6 +64,8 @@ pub trait PrimitiveUnsigned:
 pub(crate) trait PrimitiveIntegerUtils {
     type Unsigned;
 
+    const MAX_AS_U128: u128;
+
     fn abs_diff(self, other: Self) -> Self::Unsigned;
 }
 
@@ -116,7 +118,7 @@ trait ThirdPartyUnsigned:
 }
 
 macro_rules! impl_integer {
-    ($T:ident, $Signed:ident, $Unsigned:ident) => {
+    ($T:ident, $Signed:ident, $Unsigned:ident, $IS_SIGNED:literal) => {
         impl PrimitiveInteger for $T {
             type SignedTy = $Signed;
             type UnsignedTy = $Unsigned;
@@ -124,6 +126,8 @@ macro_rules! impl_integer {
 
         impl PrimitiveIntegerUtils for $T {
             type Unsigned = $Unsigned;
+
+            const MAX_AS_U128: u128 = Self::MAX as u128;
 
             #[inline]
             fn abs_diff(self, other: Self) -> Self::Unsigned {
@@ -139,18 +143,18 @@ macro_rules! impl_integer {
         }
     };
 }
-impl_integer!(i8, i8, u8);
-impl_integer!(i16, i16, u16);
-impl_integer!(i32, i32, u32);
-impl_integer!(i64, i64, u64);
-impl_integer!(i128, i128, u128);
-impl_integer!(isize, isize, usize);
-impl_integer!(u8, i8, u8);
-impl_integer!(u16, i16, u16);
-impl_integer!(u32, i32, u32);
-impl_integer!(u64, i64, u64);
-impl_integer!(u128, i128, u128);
-impl_integer!(usize, isize, usize);
+impl_integer!(i8, i8, u8, true);
+impl_integer!(i16, i16, u16, true);
+impl_integer!(i32, i32, u32, true);
+impl_integer!(i64, i64, u64, true);
+impl_integer!(i128, i128, u128, true);
+impl_integer!(isize, isize, usize, true);
+impl_integer!(u8, i8, u8, false);
+impl_integer!(u16, i16, u16, false);
+impl_integer!(u32, i32, u32, false);
+impl_integer!(u64, i64, u64, false);
+impl_integer!(u128, i128, u128, false);
+impl_integer!(usize, isize, usize, false);
 
 macro_rules! impl_signed {
     ($T:ident, $Unsigned:ident) => {
